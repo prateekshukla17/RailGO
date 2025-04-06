@@ -7,16 +7,24 @@ const JWT_SECRET = process.env.jwt;
 app.use(express.json());
 
 const auth = function (req, res, next) {
-  const token = req.header.token;
+  try {
+    const token = req.header.token;
 
-  const decodedData = jwt.verify(token, JWT_SECRET);
+    if (!token) {
+      return res.status(401).json({
+        message: 'Access Denied. No token provided.',
+      });
+    }
 
-  if (decodedData) {
-    // req.id = decodedData._id;
+    const decodedData = jwt.verify(token, JWT_SECRET);
+
+    req.user = decodedData;
+    console.log(req.user);
     next();
-  } else {
+  } catch (error) {
     res.status(403).json({
-      message: 'Incorrect Credentialss',
+      message: 'Invalid Token',
+      error: error.message,
     });
   }
 };
