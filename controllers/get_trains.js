@@ -14,7 +14,7 @@ const getTrains = async function (from, to, date) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const fetched_data = await response.json();
-    const trains = fetched_data.map((train) => ({
+    const trains = fetched_data.data?.map((train) => ({
       train_name: train.train_name,
       train_number: train.train_number,
       duration: train.duration,

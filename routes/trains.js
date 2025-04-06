@@ -6,16 +6,56 @@ const { auth } = require('../middlewares/auth');
 const { userModel } = require('../dbschema/user_model');
 const { connectDB } = require('../dbschema/connection');
 const { getTrains } = require('../controllers/get_trains');
-connectDB();
+const { getFare } = require('../controllers/getFare');
 
 trainRouter.use(express.json());
 
 trainRouter.get('/checktrains', auth, async function (req, res) {
-  const fromStationCode = req.header.from;
-  const toStationCode = req.header.from;
-  const date = req.header.date;
+  const fromStationCode = req.query.fromStationCode;
+  const toStationCode = req.query.toStationCode;
+  const date = req.query.date;
+  try {
+    const returned_trains = await getTrains(
+      fromStationCode,
+      toStationCode,
+      date
+    );
 
-  let returned_trains = getTrains(fromStationCode, toStationCode, date);
+    if (!returned_trains) {
+      return res.status(500).json({
+        error: 'Failed to fetch trains from the API',
+      });
+    }
+    res.status(200).json({ trains: returned_trains });
+  } catch (error) {
+    console.error('Error in /checktrains route:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
-trainRoute.get('/checkfare', auth, async function (req, res) {});
+
+trainRouter.get('/checkfare', auth, async function (req, res) {
+  const trainNo = req.query.trainNo;
+  const fromStationCode = req.query.fromStationCode;
+  const toStationCode = req.query.toStationCode;
+  try {
+    const returned_fare = await getFare(
+      trainNo,
+      fromStationCode,
+      toStationCode
+    );
+    if (!returned_fare) {
+      return res.status(500).json({
+        error: 'Failed to fetch trains from the API',
+      });
+    }
+    res.status(200).json(returned_fare);
+  } catch (error) {
+    console.error('Error in /checktrains route:', error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 trainRouter.get('/pnrsubscribe', auth, async function (req, res) {});
+
+module.exports = {
+  trainRouter: trainRouter,
+};

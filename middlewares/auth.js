@@ -8,7 +8,7 @@ app.use(express.json());
 
 const auth = function (req, res, next) {
   try {
-    const token = req.header.token;
+    const token = req.headers.token;
 
     if (!token) {
       return res.status(401).json({
