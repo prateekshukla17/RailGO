@@ -3,11 +3,10 @@ const { Router } = require('express');
 const trainRouter = Router();
 require('dotenv').config();
 const { auth } = require('../middlewares/auth');
-const { userModel } = require('../dbschema/user_model');
-const { connectDB } = require('../dbschema/connection');
 const { getTrains } = require('../controllers/get_trains');
 const { getFare } = require('../controllers/getFare');
-
+const { subscribePNR } = require('../controllers/pnr_sub');
+const { pnrModel } = require('../dbschema/pnr_model');
 trainRouter.use(express.json());
 
 trainRouter.get('/checktrains', auth, async function (req, res) {
@@ -54,7 +53,25 @@ trainRouter.get('/checkfare', auth, async function (req, res) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-trainRouter.get('/pnrsubscribe', auth, async function (req, res) {});
+trainRouter.get('/subscribe-pnr', auth, async function (req, res) {
+  const pnr = req.query.pnrNumber;
+  try {
+    const returned_pnr = await subscribePNR(pnr, req.user.id);
+    if (!returned_pnr) {
+      return res.status(500).json({
+        error: 'Failed to fetch PNR from the API',
+      });
+    }
+    await pnrModel.create(returned_pnr);
+
+    res.status(200).json({
+      message: 'PNR subscribed Sucessfully',
+      data: newSubscription,
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'DB CANT BE UPDATED' });
+  }
+});
 
 module.exports = {
   trainRouter: trainRouter,

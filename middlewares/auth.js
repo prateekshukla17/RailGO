@@ -18,8 +18,10 @@ const auth = function (req, res, next) {
 
     const decodedData = jwt.verify(token, JWT_SECRET);
 
-    req.user = decodedData;
-    console.log(req.user);
+    req.user = {
+      id: decodedData.id, // safer to stringify
+    };
+    console.log(req.user.id);
     next();
   } catch (error) {
     res.status(403).json({

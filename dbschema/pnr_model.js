@@ -6,7 +6,7 @@ const Object_Id = mongoose.Types.ObjectId;
 
 const pnr_Schema = new Schema({
   user: {
-    type: Schema.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
