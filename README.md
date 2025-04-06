@@ -26,6 +26,7 @@ RailGO is a Node.js and Express-based backend application that allows users to:
 ## Project Structure
 
 <details> <summary><strong>📁 Click to view Directory Structure</strong></summary>
+```
 RailGO/
 ├── controllers/
 │   ├── get_trains.js          # Handles fetching trains between stations
@@ -44,6 +45,7 @@ RailGO/
 ├── index.js                   # Application entry point
 ├── package-lock.json          # Auto-generated lockfile for npm
 └── package.json               # Project metadata and dependencies
+```
 </details>
 
 ## Endpoints
