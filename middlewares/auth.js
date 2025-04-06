@@ -1,4 +1,3 @@
-const { decrypt } = require('dotenv');
 const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
@@ -20,4 +19,8 @@ const auth = function (req, res, next) {
       message: 'Incorrect Credentialss',
     });
   }
+};
+
+module.exports = {
+  auth: auth,
 };

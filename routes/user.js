@@ -2,6 +2,7 @@ const express = require('express');
 const { Router } = require('express');
 const userRouter = Router();
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const JWT_SECRET = process.env.jwt;
 const { z } = require('zod');
 const bcrypt = require('bcrypt');
