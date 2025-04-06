@@ -25,27 +25,8 @@ RailGO is a Node.js and Express-based backend application that allows users to:
 
 ## Project Structure
 
-<details> <summary><strong>📁 Click to view Directory Structure</strong></summary>
-```
-RailGO/
-├── controllers/
-│   ├── get_trains.js          # Handles fetching trains between stations
-│   ├── getFare.js             # Handles fare check logic
-│   └── pnr_sub.js             # Manages PNR subscription and retrieval
-|   └── pnr_alerts.js          # Manages AWS SNS integration for PNR alerts
-├── dbschema/
-│   └── pnr_model.js           # Mongoose model for PNR subscriptions
-    └── pnr_model.js           # Mongoose model for USER data
-├── middlewares/
-│   └── auth.js                # Authentication middleware for user verification
-├── routes/
-│   └── trainRoutes.js         # Express routes for all /train related endpoints
-├── .gitignore                 # Specifies files and folders to be ignored by Git
-├── architecture.excalidraw    # App architecture (for diagrams/design flow)
-├── index.js                   # Application entry point
-├── package-lock.json          # Auto-generated lockfile for npm
-└── package.json               # Project metadata and dependencies
-```
+<details> <summary><code>📦 RailGO/</code></summary>
+<pre> ```text RailGO/ ├── controllers/ │ ├── get_trains.js # Handles fetching trains between stations │ ├── getFare.js # Handles fare check logic │ ├── pnr_sub.js # Manages PNR subscription and retrieval │ └── pnr_alerts.js # Manages AWS SNS integration for PNR alerts ├── dbschema/ │ ├── pnr_model.js # Mongoose model for PNR subscriptions │ └── user_model.js # Mongoose model for USER data ├── middlewares/ │ └── auth.js # Authentication middleware for user verification ├── routes/ │ └── trainRoutes.js # Express routes for all /train-related endpoints ├── .gitignore # Specifies files and folders to be ignored by Git ├── architecture.excalidraw # App architecture (for diagrams/design flow) ├── index.js # Application entry point ├── package-lock.json # Auto-generated lockfile for npm └── package.json # Project metadata and dependencies ``` </pre>
 </details>
 
 ## Endpoints
