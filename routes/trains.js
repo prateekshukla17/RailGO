@@ -55,8 +55,9 @@ trainRouter.get('/checkfare', auth, async function (req, res) {
 });
 trainRouter.get('/subscribe-pnr', auth, async function (req, res) {
   const pnr = req.query.pnrNumber;
+  const userId = req.userId;
   try {
-    const returned_pnr = await subscribePNR(pnr, req.user.id);
+    const returned_pnr = await subscribePNR(pnr, userId);
     if (!returned_pnr) {
       return res.status(500).json({
         error: 'Failed to fetch PNR from the API',
@@ -66,7 +67,7 @@ trainRouter.get('/subscribe-pnr', auth, async function (req, res) {
 
     res.status(200).json({
       message: 'PNR subscribed Sucessfully',
-      data: newSubscription,
+      data: returned_pnr,
     });
   } catch (error) {
     res.status(500).json({ error: 'DB CANT BE UPDATED' });

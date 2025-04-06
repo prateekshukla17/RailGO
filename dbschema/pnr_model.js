@@ -13,17 +13,12 @@ const pnr_Schema = new Schema({
   pnr: {
     type: String,
     required: true,
-    unique: true,
   },
   trainNo: String,
   trainName: String,
   from: String,
   departureTime: String,
   arrivalTime: String,
-  subscribedAt: {
-    type: Date,
-    default: Date.now,
-  },
 });
 
 const pnrModel = mongoose.model('PnrSubscription', pnr_Schema);
