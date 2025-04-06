@@ -7,6 +7,7 @@ const { getTrains } = require('../controllers/get_trains');
 const { getFare } = require('../controllers/getFare');
 const { subscribePNR } = require('../controllers/pnr_sub');
 const { pnrModel } = require('../dbschema/pnr_model');
+const { sendPNRMail } = require('../controllers/pnr_alerts');
 trainRouter.use(express.json());
 
 trainRouter.get('/checktrains', auth, async function (req, res) {
@@ -64,6 +65,7 @@ trainRouter.get('/subscribe-pnr', auth, async function (req, res) {
       });
     }
     await pnrModel.create(returned_pnr);
+    await sendPNRMail(req.user.email, returned_pnr);
 
     res.status(200).json({
       message: 'PNR subscribed Sucessfully',
