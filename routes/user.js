@@ -1,6 +1,8 @@
 const express = require('express');
 const { Router } = require('express');
 const userRouter = Router();
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.jwt;
 const { z } = require('zod');
 const bcrypt = require('bcrypt');
 const { userModel } = require('../dbschema/user_model');
@@ -55,9 +57,35 @@ userRouter.post('/signup', async function (req, res) {
 });
 
 userRouter.post('/signin', async function (req, res) {
-  res.json({
-    message: 'SignIn Endpoint',
+  const email = req.body.email;
+  const password = req.body.password;
+
+  const user = await userModel.findOne({
+    email: email,
   });
+
+  if (!user) {
+    res.status(403).json({
+      message: 'User does not exist, first signup',
+    });
+  }
+  const passwordMatch = await bcrypt.compare(password, user.password);
+
+  if (passwordMatch) {
+    const token = jwt.sign(
+      {
+        id: user._id.toString(),
+      },
+      JWT_SECRET
+    );
+    res.status(200).json({
+      token: token,
+    });
+  } else {
+    res.status(403).json({
+      message: 'User does not exist',
+    });
+  }
 });
 
 module.exports = {
