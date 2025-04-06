@@ -120,7 +120,7 @@ AWS_REGION=your_preferred_region (e.g. ap-south-1)
 
 # 4. Start the server
 
-`npm start`
+`node index.js`
 
 ## License
 
