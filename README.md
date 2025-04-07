@@ -19,8 +19,6 @@ RailGO is a Node.js and Express-based backend application that allows users to:
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-  - [Environment Variables](#environment-variables)
-  - [Running the Application](#running-the-application)
 - [License](#license)
 
 ## Project Structure
@@ -77,16 +75,16 @@ The application integrates with AWS Simple Notification Service (SNS) to send em
 
 ### Installation
 
-# 1. Clone the repository
+### 1. Clone the repository
 
 `git clone https://github.com/prateekshukla17/RailGO.git`
 `cd RailGO`
 
-# 2. Install dependencies
+### 2. Install dependencies
 
 `npm install`
 
-# 3. Create a `.env` file in the root directory and add the following:
+### 3. Create a `.env` file in the root directory and add the following:
 
 ```
 PORT=3000
@@ -97,7 +95,7 @@ AWS_SECRET_ACCESS_KEY=your_aws_secret
 AWS_REGION=your_preferred_region (e.g. ap-south-1)
 ```
 
-# 4. Start the server
+## 4. Start the server
 
 `node index.js`
 
